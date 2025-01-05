@@ -1,117 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <!-- Basic Page Configuration -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pankaj Badatia Profile</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-
-    <!-- Favicons -->
-    <link href="./assets/img/favicon.png" rel="icon">
-    <link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.0/css/glightbox.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-
-    <!-- Main CSS File -->
-    <link href="./assets/css/style.css" rel="stylesheet">
-    <link href="./assets/css/cards.css" rel="stylesheet">
-</head>
-
-<body>
-    <!-- Mobile Navigation Toggle -->
-    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-
-    <!-- Header Section -->
-    <header id="header">
-        <div class="d-flex flex-column">
-            <!-- Profile Section -->
-            <div class="profile">
-                <img src="assets/img/profile-img.jpg" alt="Profile Image" class="img-fluid rounded-circle">
-                <h1 class="text-light"><a href="index.html">Pankaj Badatia</a></h1>
-                <div class="social-links mt-3 text-center">
-                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=100008204530623" class="facebook"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                    <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                    <a href="https://www.linkedin.com/in/pankajbadatia/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                </div>
-            </div>
-
-            <!-- Navigation Menu -->
-            <nav id="navbar" class="nav-menu navbar">
-                <ul>
-                    <li><a href="index.html" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-                    <li><a href="about.html" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-                    <li><a href="resume.html" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-                    <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Journey So Far...</span></a></li>
-                    <li><a href="services.html" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
-                    <li><a href="blogs.html" class="nav-link scrollto"><i class="bx bx-code-alt"></i> <span>Technical Blogs</span></a></li>
-                    <li><a href="contact.html" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Get in Touch</span></a></li>
-                </ul>
-            </nav>
+---
+layout: default
+---
+<article class="post">
+    <div class="container">
+        <h1>{{ page.title }}</h1>
+        <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+        <div class="post-content">
+            {{ content }}
         </div>
-    </header>
-
-    <!-- Main Content -->
-<!-- Main Content -->
-<main id="main">
-    <section id="blog-posts" class="container">
-        <h1 class="section-title">Latest Blog Posts</h1>
-        <div class="cards">
-            {% for post in site.posts %}
-            <div class="card">
-                <div class="card__image-container">
-                    <!-- Replace with a featured image if needed -->
-                    <img src="assets/img/default-blog.jpg" alt="Blog Image">
-                </div>
-                <div class="card__content">
-                    <h3 class="card__title">
-                        <a href="{{ post.url }}">{{ post.title }}</a>
-                    </h3>
-                    <p class="card__text">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
-                    <a class="card__button" href="{{ post.url }}">Read More</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-</main>
-
-    <!-- Footer Section -->
-    <footer id="footer">
-        <div class="container">
-            <div class="copyright">&copy; Copyright 2025</div>
-            <div class="credits">Designed by <a href="https://pankajbadatia.com/">Pankaj Badatia</a></div>
-        </div>
-    </footer>
-
-       <!-- Back to Top Button -->
-       <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-<!-- Vendor JS Files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" crossorigin="anonymous" defer></script>
-<script src="./assets/otherjs/glightbox/js/glightbox.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" crossorigin="anonymous" defer></script>
-<script src="./assets/otherjs/swiper/swiper-bundle.min.js"></script>
-<script src="./assets/otherjs/purecounter/purecounter_vanilla.js"></script>
-<script src="./assets/otherjs/typed.js/typed.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js" crossorigin="anonymous" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/dist/boxicons.min.js"></script>
-<script src="./assets/otherjs/php-email-form/validate.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/age.js"></script>
-</body>
-
-</html>
+    </div>
+</article>
