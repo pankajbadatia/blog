@@ -3,3 +3,7 @@ description: A personal blog about AI, Data Science, and Technology.
 baseurl: "/blog" # No subpath for GitHub Pages root repository
 url: "https://pankajbadatia.github.io"
 theme: minima
+plugins:
+  - jekyll-paginate
+paginate: 10 # Number of posts per page
+paginate_path: "/page:num/"
