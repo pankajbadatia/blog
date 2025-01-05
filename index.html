@@ -4,56 +4,66 @@ title: Blog
 paginate: 10
 ---
 
-<section class="blog-archive-v2-container">
-    <h1 class="blog-archive-v2-title">Blog Archive</h1>
+<section class="blog-section">
+    <h1 class="blog-title">Blog Archive</h1>
 
-    <!-- Search Bar -->
-    <div class="blog-archive-v2-search">
-        <input type="text" id="search-input" placeholder="Search blog posts...">
-    </div>
+    <!-- Blog Container -->
+    <div class="blog-container">
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+            <h2 class="sidebar-title">Explore by Year</h2>
+            <ul class="tree-menu">
+                {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+                {% for year in posts_by_year %}
+                <li>
+                    <button class="tree-toggle">{{ year.name }}</button>
+                    <ul class="tree-months">
+                        {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
+                        {% for month in posts_by_month %}
+                        <li>
+                            <a href="#{{ year.name }}-{{ month.name }}">{{ month.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
 
-    <!-- Sidebar with Years and Months -->
-    <div class="blog-archive-v2-sidebar">
-        <ul class="tree-menu">
-            {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-            {% for year in posts_by_year %}
-            <li>
-                <button class="tree-toggle">{{ year.name }}</button>
-                <ul class="tree-months">
-                    {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
-                    {% for month in posts_by_month %}
-                    <li>
-                        <a href="#{{ year.name }}-{{ month.name }}">{{ month.name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
+        <!-- Main Blog Content -->
+        <main class="blog-main-content">
+            <!-- Search Bar -->
+            <div class="blog-search-bar">
+                <input type="text" id="search-input" placeholder="Search blog posts...">
+            </div>
+
+            <!-- Blog Post Cards -->
+            {% for post in paginator.posts %}
+            <div class="blog-post-card">
+                <div class="blog-thumbnail">
+                    <img src="{{ post.image | default: '/assets/img/default-thumbnail.jpg' }}" alt="Post Thumbnail">
+                </div>
+                <div class="blog-content">
+                    <h3 class="blog-post-title">
+                        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                    </h3>
+                    <p class="blog-post-date">{{ post.date | date: "%Y-%m-%d" }}</p>
+                    <p class="blog-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                    <a href="{{ post.url | prepend: site.baseurl }}" class="blog-read-more">Read More</a>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
-    </div>
 
-    <!-- Blog Posts Section -->
-    <div class="blog-archive-v2-main">
-        {% for post in paginator.posts %}
-        <div class="blog-post-card">
-            <h3 class="blog-post-title">
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-            </h3>
-            <p class="blog-post-date">{{ post.date | date: "%Y-%m-%d" }}</p>
-            <p class="blog-post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-            <a href="{{ post.url | prepend: site.baseurl }}" class="blog-archive-v2-read-more">Read More</a>
-        </div>
-        {% endfor %}
-    </div>
-
-    <!-- Pagination -->
-    <div class="blog-archive-v2-pagination">
-        {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="blog-archive-v2-pagination-link">Previous</a>
-        {% endif %}
-        <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-        {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="blog-archive-v2-pagination-link">Next</a>
-        {% endif %}
+            <!-- Pagination -->
+            <div class="blog-pagination">
+                {% if paginator.previous_page %}
+                <a href="{{ paginator.previous_page_path }}" class="blog-pagination-link">Previous</a>
+                {% endif %}
+                <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+                {% if paginator.next_page %}
+                <a href="{{ paginator.next_page_path }}" class="blog-pagination-link">Next</a>
+                {% endif %}
+            </div>
+        </main>
     </div>
 </section>
