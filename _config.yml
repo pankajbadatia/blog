@@ -1,0 +1,5 @@
+title: My Blog
+description: A personal blog about AI, Data Science, and Technology.
+baseurl: "" # No subpath for GitHub Pages root repository
+url: "https://pankajbadatia.github.io/blog"
+theme: minima
