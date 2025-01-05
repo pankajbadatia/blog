@@ -97,18 +97,3 @@
     color: #b0bec5;
     line-height: 18px;
 }
-
-.posts-by-month h3 {
-    margin-top: 20px;
-    font-size: 1.5em;
-    color: #333;
-}
-
-.posts-by-month ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.posts-by-month li {
-    margin: 10px 0;
-}
