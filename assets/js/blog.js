@@ -1,50 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
     const posts = document.querySelectorAll(".blog-card");
     const searchInput = document.getElementById("search-input");
+    const searchButton = document.getElementById("search-button");
     const resetButton = document.getElementById("reset-filter");
-    const yearTabs = document.querySelectorAll(".year-tab");
-    const monthTabsContainer = document.querySelector(".month-tabs");
+    const yearTabs = document.querySelectorAll(".tree-toggle");
+    const monthLinks = document.querySelectorAll(".tree-months a");
 
-    // Generate Month Tabs Dynamically
-    yearTabs.forEach((tab) => {
+    // Sidebar Toggle
+    yearTabs.forEach(tab => {
         tab.addEventListener("click", function () {
-            const selectedYear = this.dataset.year;
+            const months = this.nextElementSibling;
+            months.style.display = months.style.display === "block" ? "none" : "block";
+        });
+    });
 
-            // Clear existing months
-            monthTabsContainer.innerHTML = "";
+    // Month Filtering
+    monthLinks.forEach(link => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const selectedMonth = this.dataset.month;
 
-            // Generate months dynamically
-            const months = Array.from(posts)
-                .filter(post => post.dataset.month.startsWith(selectedYear))
-                .map(post => post.dataset.month.split("-")[1])
-                .filter((value, index, self) => self.indexOf(value) === index); // Unique months
-
-            months.forEach((month) => {
-                const monthButton = document.createElement("button");
-                monthButton.classList.add("month-tab");
-                monthButton.innerText = month;
-                monthButton.dataset.month = `${selectedYear}-${month}`;
-                monthTabsContainer.appendChild(monthButton);
-
-                // Month Filtering
-                monthButton.addEventListener("click", function () {
-                    const selectedMonth = this.dataset.month;
-                    posts.forEach(post => {
-                        post.style.display = post.dataset.month === selectedMonth ? "block" : "none";
-                    });
-                });
-            });
-
-            // Show all posts for the selected year
             posts.forEach(post => {
-                post.style.display = post.dataset.month.startsWith(selectedYear) ? "block" : "none";
+                const postMonth = post.getAttribute("data-month");
+                post.style.display = postMonth === selectedMonth ? "block" : "none";
             });
         });
     });
 
     // Search Functionality
-    searchInput.addEventListener("input", function () {
-        const query = this.value.toLowerCase();
+    searchButton.addEventListener("click", function () {
+        const query = searchInput.value.toLowerCase();
         posts.forEach(post => {
             const title = post.querySelector(".blog-card-title a").innerText.toLowerCase();
             const excerpt = post.querySelector(".blog-card-excerpt").innerText.toLowerCase();

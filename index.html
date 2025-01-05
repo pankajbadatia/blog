@@ -10,31 +10,37 @@ paginate: 10
     <!-- Search Bar -->
     <div class="modern-blog-search">
         <input type="text" id="search-input" placeholder="Search blog posts...">
-        <button id="reset-filter" class="reset-button">Show All</button>
+        <button id="search-button" class="search-button">Search</button>
     </div>
 
-    <!-- Dynamic Tabs for Years -->
-    <div class="blog-tabs">
-        {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-        <ul class="year-tabs">
-            {% for year in posts_by_year %}
-            <li>
-                <button class="year-tab" data-year="{{ year.name }}">{{ year.name }}</button>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Dynamic Months -->
-    <div class="month-tabs">
-        <!-- Months will load dynamically based on the selected year -->
+    <!-- Sidebar -->
+    <div class="blog-sidebar-container">
+        <aside class="blog-sidebar">
+            <h2>Explore</h2>
+            <ul class="tree-menu">
+                {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+                {% for year in posts_by_year %}
+                <li>
+                    <button class="tree-toggle">{{ year.name }}</button>
+                    <ul class="tree-months">
+                        {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
+                        {% for month in posts_by_month %}
+                        <li>
+                            <a href="#" data-month="{{ year.name }}-{{ month.name }}">{{ month.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+            <button id="reset-filter" class="reset-button">Show All</button>
+        </aside>
     </div>
 
     <!-- Blog Post Grid -->
     <div id="post-container" class="blog-grid">
         {% for post in paginator.posts %}
         <div class="blog-card" data-month="{{ post.date | date: '%Y-%B' }}">
-            <img src="{{ post.image | default: '/assets/img/default-thumbnail.jpg' }}" alt="Post Image" class="blog-card-thumbnail">
             <div class="blog-card-content">
                 <h3 class="blog-card-title">
                     <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
