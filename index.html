@@ -4,69 +4,57 @@ title: Blog
 paginate: 10
 ---
 
-<section class="blog-section">
-    <h1 class="blog-title">Blog Archive</h1>
+<section class="modern-blog-container">
+    <h1 class="modern-blog-title">Blog Archive</h1>
 
-    <!-- Blog Container -->
-    <div class="blog-container">
-        <!-- Sidebar -->
-        <aside class="blog-sidebar">
-            <h2 class="sidebar-title">Explore by Year</h2>
-            <ul class="tree-menu">
-                {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-                {% for year in posts_by_year %}
-                <li>
-                    <button class="tree-toggle">{{ year.name }}</button>
-                    <ul class="tree-months">
-                        {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
-                        {% for month in posts_by_month %}
-                        <li>
-                            <a href="#" data-month="{{ year.name }}-{{ month.name }}" class="month-link">{{ month.name }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
-        </aside>
+    <!-- Search Bar -->
+    <div class="modern-blog-search">
+        <input type="text" id="search-input" placeholder="Search blog posts...">
+        <button id="reset-filter" class="reset-button">Show All</button>
+    </div>
 
-        <!-- Main Blog Content -->
-        <main class="blog-main-content">
-            <!-- Search Bar and Show All Button -->
-            <div class="blog-search-bar">
-                <input type="text" id="search-input" placeholder="Search blog posts...">
-                <button id="reset-filter" class="reset-button">Show All</button>
+    <!-- Dynamic Tabs for Years -->
+    <div class="blog-tabs">
+        {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+        <ul class="year-tabs">
+            {% for year in posts_by_year %}
+            <li>
+                <button class="year-tab" data-year="{{ year.name }}">{{ year.name }}</button>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Dynamic Months -->
+    <div class="month-tabs">
+        <!-- Months will load dynamically based on the selected year -->
+    </div>
+
+    <!-- Blog Post Grid -->
+    <div id="post-container" class="blog-grid">
+        {% for post in paginator.posts %}
+        <div class="blog-card" data-month="{{ post.date | date: '%Y-%B' }}">
+            <img src="{{ post.image | default: '/assets/img/default-thumbnail.jpg' }}" alt="Post Image" class="blog-card-thumbnail">
+            <div class="blog-card-content">
+                <h3 class="blog-card-title">
+                    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                </h3>
+                <p class="blog-card-date">{{ post.date | date: "%Y-%m-%d" }}</p>
+                <p class="blog-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                <a href="{{ post.url | prepend: site.baseurl }}" class="blog-card-read-more">Read More</a>
             </div>
+        </div>
+        {% endfor %}
+    </div>
 
-            <!-- Blog Post Cards -->
-            <div id="post-container">
-                {% for post in paginator.posts %}
-                <div class="blog-post-card" data-month="{{ post.date | date: '%Y-%B' }}">
-                    <div class="blog-thumbnail">
-                        <img src="{{ post.image | default: '/assets/img/default-thumbnail.jpg' }}" alt="Post Thumbnail">
-                    </div>
-                    <div class="blog-content">
-                        <h3 class="blog-post-title">
-                            <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                        </h3>
-                        <p class="blog-post-date">{{ post.date | date: "%Y-%m-%d" }}</p>
-                        <p class="blog-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-                        <a href="{{ post.url | prepend: site.baseurl }}" class="blog-read-more">Read More</a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Pagination -->
-            <div class="blog-pagination">
-                {% if paginator.previous_page %}
-                <a href="{{ paginator.previous_page_path }}" class="blog-pagination-link">Previous</a>
-                {% endif %}
-                <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-                {% if paginator.next_page %}
-                <a href="{{ paginator.next_page_path }}" class="blog-pagination-link">Next</a>
-                {% endif %}
-            </div>
-        </main>
+    <!-- Pagination -->
+    <div class="blog-pagination">
+        {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path }}" class="pagination-link">Previous</a>
+        {% endif %}
+        <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+        {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path }}" class="pagination-link">Next</a>
+        {% endif %}
     </div>
 </section>
