@@ -3,22 +3,22 @@ layout: default
 title: Blog
 ---
 
-<section id="blog-posts" class="container">
-    <h1 class="section-title">Blog Archive</h1>
+<section id="blog-posts" class="blog-archive-container">
+    <h1 class="blog-archive-title">Blog Archive</h1>
     
     {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
     
     {% for year in posts_by_year %}
-    <h2>{{ year.name }}</h2>
-    <div class="posts-by-month">
+    <h2 class="blog-year">{{ year.name }}</h2>
+    <div class="blog-posts-by-month">
         {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
         {% for month in posts_by_month %}
-        <h3>{{ month.name }}</h3>
-        <ul>
+        <h3 class="blog-month">{{ month.name }}</h3>
+        <ul class="blog-post-list">
             {% for post in month.items %}
-            <li>
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                <span>({{ post.date | date: '%B %d, %Y' }})</span>
+            <li class="blog-post-item">
+                <a class="blog-post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <span class="blog-post-date">{{ post.date | date: '%B %d, %Y' }}</span>
             </li>
             {% endfor %}
         </ul>
