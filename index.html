@@ -1,19 +1,22 @@
 ---
 layout: default
 title: Blog
-paginate: true
 ---
-<section id="blog-posts" class="blog-archive-container">
-    <h1 class="blog-archive-title">Blog Archive</h1>
 
-    <div class="blog-sidebar">
-        <h3>Archives</h3>
-        <ul class="tree-menu">
+<section class="blog-archive-v2-container">
+    <h1 class="blog-archive-v2-title">Blog Archive</h1>
+
+    <div class="blog-archive-v2-search">
+        <input type="text" id="blog-archive-v2-search-input" placeholder="Search blog posts...">
+    </div>
+
+    <div class="blog-archive-v2-sidebar">
+        <ul class="blog-archive-v2-tree">
             {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
             {% for year in posts_by_year %}
             <li>
-                <button class="tree-toggle">{{ year.name }}</button>
-                <ul class="tree-months">
+                <button class="blog-archive-v2-toggle">{{ year.name }}</button>
+                <ul class="blog-archive-v2-months">
                     {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
                     {% for month in posts_by_month %}
                     <li>
@@ -26,25 +29,28 @@ paginate: true
         </ul>
     </div>
 
-    <div class="blog-main">
+    <div class="blog-archive-v2-main">
         {% for post in paginator.posts %}
-        <div class="blog-post-card">
-            <h3><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
-            <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-            <p class="post-date">{{ post.date | date: "%B %d, %Y" }}</p>
-            <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Read More</a>
+        <div class="blog-archive-v2-post-card">
+            <div class="blog-archive-v2-post-content">
+                <h2 class="blog-archive-v2-post-title">
+                    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                </h2>
+                <p class="blog-archive-v2-post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                <p class="blog-archive-v2-post-date">{{ post.date | date: "%B %d, %Y" }}</p>
+                <a href="{{ post.url | prepend: site.baseurl }}" class="blog-archive-v2-read-more">Read More</a>
+            </div>
         </div>
         {% endfor %}
     </div>
 
-    <!-- Pagination Controls -->
-    <div class="pagination">
+    <div class="blog-archive-v2-pagination">
         {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="pagination-link">Previous</a>
+        <a href="{{ paginator.previous_page_path }}" class="blog-archive-v2-pagination-link">Previous</a>
         {% endif %}
         <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
         {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="pagination-link">Next</a>
+        <a href="{{ paginator.next_page_path }}" class="blog-archive-v2-pagination-link">Next</a>
         {% endif %}
     </div>
 </section>
