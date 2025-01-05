@@ -21,7 +21,7 @@ paginate: 10
                         {% assign posts_by_month = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
                         {% for month in posts_by_month %}
                         <li>
-                            <a href="#{{ year.name }}-{{ month.name }}">{{ month.name }}</a>
+                            <a href="#" data-month="{{ year.name }}-{{ month.name }}" class="month-link">{{ month.name }}</a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -32,27 +32,30 @@ paginate: 10
 
         <!-- Main Blog Content -->
         <main class="blog-main-content">
-            <!-- Search Bar -->
+            <!-- Search Bar and Show All Button -->
             <div class="blog-search-bar">
                 <input type="text" id="search-input" placeholder="Search blog posts...">
+                <button id="reset-filter" class="reset-button">Show All</button>
             </div>
 
             <!-- Blog Post Cards -->
-            {% for post in paginator.posts %}
-            <div class="blog-post-card">
-                <div class="blog-thumbnail">
-                    <img src="{{ post.image | default: '/assets/img/default-thumbnail.jpg' }}" alt="Post Thumbnail">
+            <div id="post-container">
+                {% for post in paginator.posts %}
+                <div class="blog-post-card" data-month="{{ post.date | date: '%Y-%B' }}">
+                    <div class="blog-thumbnail">
+                        <img src="{{ post.image | default: '/assets/img/default-thumbnail.jpg' }}" alt="Post Thumbnail">
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-post-title">
+                            <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                        </h3>
+                        <p class="blog-post-date">{{ post.date | date: "%Y-%m-%d" }}</p>
+                        <p class="blog-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                        <a href="{{ post.url | prepend: site.baseurl }}" class="blog-read-more">Read More</a>
+                    </div>
                 </div>
-                <div class="blog-content">
-                    <h3 class="blog-post-title">
-                        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                    </h3>
-                    <p class="blog-post-date">{{ post.date | date: "%Y-%m-%d" }}</p>
-                    <p class="blog-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-                    <a href="{{ post.url | prepend: site.baseurl }}" class="blog-read-more">Read More</a>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
 
             <!-- Pagination -->
             <div class="blog-pagination">

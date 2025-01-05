@@ -1,56 +1,46 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Sidebar Tree Menu Toggle (Year and Month Collapse)
-    const toggles = document.querySelectorAll(".tree-toggle");
-    toggles.forEach((toggle) => {
+    const posts = document.querySelectorAll(".blog-post-card");
+    const monthLinks = document.querySelectorAll(".tree-months a");
+    const searchInput = document.getElementById("search-input");
+    const resetButton = document.getElementById("reset-filter");
+
+    // Sidebar Tree Menu Toggle
+    document.querySelectorAll(".tree-toggle").forEach(toggle => {
         toggle.addEventListener("click", function () {
-            const nextElement = this.nextElementSibling;
-            if (nextElement.style.display === "block") {
-                nextElement.style.display = "none";
-            } else {
-                nextElement.style.display = "block";
-            }
+            const sibling = this.nextElementSibling;
+            sibling.style.display = sibling.style.display === "block" ? "none" : "block";
         });
     });
 
-    // Month Filtering for Posts
-    const monthLinks = document.querySelectorAll(".tree-months a");
-    const posts = document.querySelectorAll(".blog-post-card, .blog-post-item");
-
-    monthLinks.forEach((link) => {
+    // Month Filtering
+    monthLinks.forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
+            const filterMonth = this.getAttribute("data-month");
 
-            // Get selected year-month key
-            const filterKey = this.getAttribute("href").substring(1);
-
-            // Show/hide posts based on the selected filter
-            posts.forEach((post) => {
-                const postDate = post.querySelector(".blog-post-date").textContent.trim();
-                const postYear = new Date(postDate).getFullYear();
-                const postMonth = new Date(postDate).toLocaleString("default", { month: "long" });
-
-                if (`${postYear}-${postMonth}` === filterKey) {
-                    post.style.display = "block";
-                } else {
-                    post.style.display = "none";
-                }
+            posts.forEach(post => {
+                const postMonth = post.getAttribute("data-month");
+                post.style.display = postMonth === filterMonth ? "block" : "none";
             });
         });
     });
 
     // Search Functionality
-    const searchInput = document.getElementById("search-input");
     if (searchInput) {
         searchInput.addEventListener("input", function () {
             const query = this.value.toLowerCase();
-            posts.forEach((post) => {
-                const title = post.querySelector("h3, a").innerText.toLowerCase();
-                if (title.includes(query)) {
-                    post.style.display = "block";
-                } else {
-                    post.style.display = "none";
-                }
+            posts.forEach(post => {
+                const title = post.querySelector(".blog-post-title a").innerText.toLowerCase();
+                post.style.display = title.includes(query) ? "block" : "none";
             });
+        });
+    }
+
+    // Reset Filter
+    if (resetButton) {
+        resetButton.addEventListener("click", function () {
+            searchInput.value = "";
+            posts.forEach(post => (post.style.display = "block"));
         });
     }
 });
